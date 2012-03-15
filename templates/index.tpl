@@ -5,5 +5,5 @@
     <title>{title}</title>
     {css_files}
   </head>
-  <body><div id=header>{header}</div><div id=content>{body}</div><div id=footer>{footer}</div>{javascript_files}</body>
+  <body><div id=header>{header}</div><div id=content><div>{body}</div></div><div id=footer>{footer}</div>{javascript_files}</body>
 </html>

@@ -10,10 +10,14 @@ body {
 }
 
 div#content {
+    position: relative;
     height: 500px;
     color:white;
 }
 
+div#content div {
+    position: absolute;
+}
 /* header styles */
 div#header {
     position: relative;
@@ -56,6 +60,8 @@ div#footer a {
 }
 
 h1 {
+    margin: 0px;
+    padding: 4px 0px;
     text-decoration: none;
     font-weight: normal;
 }

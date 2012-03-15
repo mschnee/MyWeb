@@ -13,6 +13,12 @@ function __autoload($classname) {
         throw new Exception("Could not load $classname");
 }
 
+function debug($message) {
+    if(is_array($message))
+        $message = print_r($message,true);
+    trigger_error($message);
+}
+
 /* Whitelist of views */
 static $known_views = array(
     "Index",

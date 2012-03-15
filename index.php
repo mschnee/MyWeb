@@ -14,7 +14,7 @@ include_once 'common.php';
 $tokens = explode("/",preg_replace("/^\//","",$_SERVER["REQUEST_URI"]));
 if($tokens and $tokens[0]=="Ajax") {
     $c = new Controllers_AjaxLoader(array_slice($tokens,1));
-    return $c->json();
+    echo $c->json();
 } else {
     $c = new Controllers_HtmlLoader($tokens);
     echo $c->html();
