@@ -14,7 +14,12 @@ class Controllers_HtmlLoader {
     } else {
      $viewClass = "Views_".str_replace("/","_",$p);
     }
-    $this->view = new $viewClass;
+    $dr = $_SERVER['DOCUMENT_ROOT'];
+    try {
+        $this->view = new $viewClass;
+    } catch(Exception $e) {
+        $this->view = new Views_Index;
+    }
     
   }
   public function html() {

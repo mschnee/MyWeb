@@ -5,14 +5,17 @@
 
 
 function __autoload($classname) {
-  $dr = $_SERVER['DOCUMENT_ROOT'];
-  $class = str_replace("_",DIRECTORY_SEPARATOR, $classname);
-  if(file_exists("${dr}/classes/${class}.php"))
-    include "${dr}/classes/${class}.php";
+    $dr = $_SERVER['DOCUMENT_ROOT'];
+    $class = str_replace("_",DIRECTORY_SEPARATOR, $classname);
+    if(file_exists("${dr}/classes/${class}.php"))
+        include "${dr}/classes/${class}.php";
+    else 
+        throw new Exception("Could not load $classname");
 }
 
 /* Whitelist of views */
 static $known_views = array(
-  "Index",
-  "Login"
+    "Index",
+    "Login",
+    "Projects"
 );

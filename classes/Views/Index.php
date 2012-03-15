@@ -10,7 +10,7 @@ class Views_Index implements Interfaces_View {
   public function html() {
     $t = new Template("index");
     $t->title = "MyWeb";
-    $t->body = "Hello, World...!";
+    $t->body = new Views_MainIndex();
     $t->header = new Views_Header();
     $t->footer = new Views_Footer();
     $t->css_files = "<style type=\"text/css\" media=\"all\">
