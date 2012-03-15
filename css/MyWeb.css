@@ -1,0 +1,27 @@
+html {
+    height: 100%;
+    font-family: sans;
+    background: url("/images/bar.svg") top left no-repeat, url("/images/bar2.svg") left 600px no-repeat, black;
+}
+
+body {
+    width: 900px;
+    margin: 0px auto;
+}
+
+div#content {
+    height: 500px;
+    color:white;
+}
+div#header {
+    height: 100px;
+    vertical-align: text-bottom;
+}
+
+
+
+div#footer {
+    text-align: center;
+    font-size: 9px;
+    color: #888888;
+}

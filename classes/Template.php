@@ -32,15 +32,16 @@ class Template implements Interfaces_View {
     foreach($this->m_d as $token=>$content) {
       $replaceWith = null;
       if($content instanceof Interfaces_View) {
-	$replaceWith = $content->html();
+        $replaceWith = $content->html();
       } else {
-	$replaceWith = $content;
+        $replaceWith = $content;
       }
-      $this->m_fileData = str_replace("%{$token}%",$replaceWith,$d);
+      $d = str_replace("{".$token."}",$replaceWith,$d);
     }
     
     // replace anything that's left
-    preg_replace("/%\w*?%/","",$d);
+    $d = preg_replace("/{\w+}/","",$d);
+    
     return $d;
   }
 }
