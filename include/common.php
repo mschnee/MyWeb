@@ -3,7 +3,8 @@
  * @copyright 2012 Matthew Schnee <matthew.schnee@gmail.com>
  */
 
-
+ ini_set("display_errors","Off");
+ 
 function __autoload($classname) {
     $dr = $_SERVER['DOCUMENT_ROOT'];
     $class = str_replace("_",DIRECTORY_SEPARATOR, $classname);

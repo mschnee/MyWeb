@@ -36,7 +36,6 @@
       * 
       */
     function advanceLink(href) {
-        console.log(href);
         $.ajax({
             url: "/Ajax"+href,
             data: {},
@@ -58,6 +57,7 @@
      * Advance the "page".
      */
     function advanceAjaxLink(data,textStatus,jqXHR) {
+        console.log(data);
         if(data.success) {
             var currentC = $("div#content>div");
             var newC = $("<div></div>");

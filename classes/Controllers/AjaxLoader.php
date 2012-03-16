@@ -13,7 +13,6 @@ class Controllers_AjaxLoader {
             $refl = new ReflectionClass("Views_".$tokens[0]);
             $this->m_view = $refl->newInstanceArgs(array_slice($tokens,1));
         } catch(Exception $e) {
-            debug($e->getMessage());
             $refl = new ReflectionClass("Views_MainIndex");
             $this->m_view = $refl->newInstanceArgs(array_slice($tokens,1));
         }
