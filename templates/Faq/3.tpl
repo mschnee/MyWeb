@@ -1,6 +1,6 @@
 <div class=question>
-    Do you accept bacon?
+    How much of this is your own work?
 </div>
 <div class=answer>
-<p>Yes.</p>
+<p>So far, everything except for jQuery and the jQuery History plugin.</p>
 </div>

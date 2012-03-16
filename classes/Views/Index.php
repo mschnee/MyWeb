@@ -29,7 +29,6 @@ class Views_Index implements Interfaces_View {
             ";
             $t->javascript_files = "
                 <script type=\"text/javascript\" src=\"/js/jquery-1.7.1.min.js\"></script>
-                <script type=\"text/javascript\" src=\"/js/jquery.ba-hashchange.min.js\"></script>
                 <script type=\"text/javascript\" src=\"/js/jquery.history.js\"></script>
                 <script type=\"text/javascript\" src=\"/js/MyWeb.js\"></script>
             ";
