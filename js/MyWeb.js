@@ -64,8 +64,8 @@
             $("div#content").append(newC);newC.append(data.html).css({opacity:0,left:100});
             currentC.animate({
                 opacity: 0,
-                left: "-=100"
-                },500, function(){
+                left: "-=500"
+                },250, function(){
                     currentC.remove();
                     
                 }
@@ -82,7 +82,7 @@
         if(data.success) {
             var currentC = $("div#content>div");
             var newC = $("<div></div>");
-            $("div#content").append(newC);newC.append(data.html).css({opacity:0,left:-100});
+            $("div#content").append(newC);newC.append(data.html).css({opacity:0,left:-500});
             currentC.animate({
                 opacity: 0,
                 left: "+=100"
@@ -93,7 +93,7 @@
             );
             newC.animate({
                 opacity: 1,
-                left: "+=100"
+                left: "+=500"
                 },500
             );
         }

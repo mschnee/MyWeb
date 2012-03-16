@@ -5,24 +5,28 @@
  * correct information.
  */
 class Controllers_HtmlLoader {
-  
-  public function __construct($p) {
-    $p = preg_replace("/^\//","",$p);
-    $viewClass = "";
-    if(!in_array($p,$GLOBALS["known_views"])) {
-      $viewClass = "Views_Index";
-    } else {
-     $viewClass = "Views_".str_replace("/","_",$p);
-    }
-    $dr = $_SERVER['DOCUMENT_ROOT'];
-    try {
-        $this->view = new $viewClass;
-    } catch(Exception $e) {
-        $this->view = new Views_Index;
-    }
+    private 
+        $m_view = null,
+        $m_content = null;
+        
+    public function __construct($tokens = array()) {
+        if(empty($tokens)) {
+            $tokens[0] = "MainIndex";
+        }
+        $this->m_view = new Views_Index();
+        
+        try {
+            $refl = new ReflectionClass("Views_".$tokens[0]);
+            $this->m_content = $refl->newInstanceArgs(array_slice($tokens,1));
+        } catch(Exception $e) {
+            $refl = new ReflectionClass("Views_MainIndex");
+            $this->m_content = $refl->newInstanceArgs(array_slice($tokens,1));
+        }
     
-  }
-  public function html() {
-    return $this->view->html();
-  }
+    }
+    public function html() {
+        $this->m_view->setContent($this->m_content);
+        if($this->m_view)
+            return $this->m_view->html();
+    }
 }
