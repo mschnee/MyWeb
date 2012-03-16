@@ -70,3 +70,38 @@ h1 {
     text-decoration: none;
     font-weight: normal;
 }
+
+/* Pager */
+div.Pager {
+    position: relative;
+    
+}
+div.Pager > div {
+    margin: 0px auto;
+}
+
+div.Pager ul {
+    margin: 0px auto;
+    list-style: none;
+    padding: 0px;
+}
+div.Pager  li {
+    float: left;
+    margin-right: 50px;
+}
+
+div.Pager li.selected {
+    text-decoration: underline;
+}
+div#content div.Pager li a {
+    font-weight: normal;
+}
+
+/* faq */
+div.question {
+    text-decoration: underline;
+}
+div.answer {
+    color: #aaa;
+    font-style: italic;
+}

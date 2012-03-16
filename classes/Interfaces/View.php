@@ -1,4 +1,4 @@
 <?php
 interface Interfaces_View {
-	public function html();
+    public function html();
 }

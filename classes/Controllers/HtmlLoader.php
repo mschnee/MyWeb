@@ -1,15 +1,11 @@
 <?php
 
-/**
- * Loads the "standard" frame and then fills the content with 
- * correct information.
- */
 class Controllers_HtmlLoader {
     private 
         $m_view = null,
         $m_content = null;
         
-    public function __construct($tokens = array()) {
+    public function __construct($tokens = array(),$arguments) {
         if(empty($tokens)) {
             $tokens[0] = "MainIndex";
         }
@@ -21,6 +17,9 @@ class Controllers_HtmlLoader {
         } catch(Exception $e) {
             $refl = new ReflectionClass("Views_MainIndex");
             $this->m_content = $refl->newInstanceArgs(array_slice($tokens,1));
+        }
+        if($refl->hasMethod("setArguments")) {
+            $this->m_content->setArguments($arguments);
         }
     
     }

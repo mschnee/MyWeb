@@ -6,15 +6,7 @@
         return;
     }
     
-    $("a").click(function(){
-        var href = $(this).attr("href");
-        if(href.match(/^\//)) {
-            History.pushState({adding:true,href:href},null,href);
-            return false;
-        } else {
-            return true;
-        }
-    });
+    bindLinkHandler($('a'));
     
 
     History.Adapter.bind(window,"statechange",function(event){
@@ -23,23 +15,36 @@
         if(state.data.adding===true) {
             //History.replaceState({adding:false,href:state.data.href,change:false});
             state.data.adding=false;
-            advanceLink(state.data.href);
+            handleAjaxLink(state.data.href);
         } else if(state.data.adding===false) {
             retreatLink(state.data.href);
         }
         
     });
 
-    
+    function bindLinkHandler(selector) {
+        selector.click(function(){
+            var href = $(this).attr("href");
+            console.log(href);
+            if(href.match(/^\//)) {
+                History.pushState({adding:true,href:href},null,href);
+                return false;
+            } else {
+                return false;
+            }
+        }
+            
+        );
+    }
     
     /**
       * 
       */
-    function advanceLink(href) {
+    function handleAjaxLink(href) {
         $.ajax({
             url: "/Ajax"+href,
             data: {},
-            success: advanceAjaxLink,
+            success: handleAjaxReturn,
             dataType: "json"
         });
     }
@@ -56,48 +61,45 @@
     /**
      * Advance the "page".
      */
-    function advanceAjaxLink(data,textStatus,jqXHR) {
-        console.log(data);
+    function handleAjaxReturn(data,textStatus,jqXHR) {
         if(data.success) {
             var currentC = $("div#content>div");
-            var newC = $("<div></div>");
-            $("div#content").append(newC);newC.append(data.html).css({opacity:0,left:100});
-            currentC.animate({
-                opacity: 0,
-                left: "-=500"
-                },250, function(){
-                    currentC.remove();
-                    
-                }
-            );
-            newC.animate({
-                opacity: 1,
-                left: "-=100"
-                },500
-            );
+            var newC = $("<div></div>").width("900px");
+            newC.append(data.html);
+            
+            changeAjaxContent(currentC,newC);
         }
+        bindLinkHandler($("div#content>div a"));
+        /* eventually I'll want special handling for different types of panels
+        if(data.ui) {
+            if(data.ui=="PagedPanel") {
+                bindLinkHandler($("div#content>div a"))
+            } else {
+                bindLinkHandler($("div#content>div a"))
+            }
+        }
+        */
     }
     
-    function retreatAjaxLink(data,textStatus,jqXHR) {
-        if(data.success) {
-            var currentC = $("div#content>div");
-            var newC = $("<div></div>");
-            $("div#content").append(newC);newC.append(data.html).css({opacity:0,left:-500});
-            currentC.animate({
-                opacity: 0,
-                left: "+=100"
-                },500, function(){
-                    currentC.remove();
-                    
-                }
-            );
-            newC.animate({
-                opacity: 1,
-                left: "+=500"
-                },500
-            );
-        }
-    }
-    
+    function changeAjaxContent(oldElement,newContent) {
+        
+        newContent.css({opacity:0,left:500});
+        oldElement.after(newContent);
+        
+        
+        oldElement.animate({
+            opacity: 0,
+            left: "-=100"
+        },500, function(){
+            oldElement.remove();
+            
+            }
+        );
+        newContent.animate({
+            opacity: 1,
+            left: "-=500"
+            },500
+        );
+    }    
 
 })();

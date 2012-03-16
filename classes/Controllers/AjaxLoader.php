@@ -4,27 +4,39 @@ class Controllers_AjaxLoader {
     /**
      *  Loads a controller or viewer for ajax.
      */
-    public function __construct($tokens=array()) {
-        debug($tokens);
+    public function __construct($tokens=array(),$arguments=array()) {
         if(empty($tokens)) {
             $tokens[0] = "MainIndex";
         }
-        try {
+        
+        $refl = null;
+        /* try loading a controller, then a view */
+        
+        if(!$refl) try {
             $refl = new ReflectionClass("Views_".$tokens[0]);
-            $this->m_view = $refl->newInstanceArgs(array_slice($tokens,1));
+            
         } catch(Exception $e) {
             $refl = new ReflectionClass("Views_MainIndex");
-            $this->m_view = $refl->newInstanceArgs(array_slice($tokens,1));
+        }
+        if(!$refl) throw new Exception("oops");
+        
+        $this->m_view = $refl->newInstanceArgs(array_slice($tokens,1));
+        if($refl->hasMethod("setArguments")) {
+            $this->m_view->setArguments($arguments);
         }
     }
   
     public function json() {
         if($this->m_view) {
-            $ret = array(
-                'html' => $this->m_view->html(),
-                'success' => true
-            );
-            return json_encode($ret);
+            if($this->m_view instanceof Interfaces_Json) {
+                return json_encode($this->m_view->json());
+            } else {
+                $ret = array(
+                    'html' => $this->m_view->html(),
+                    'success' => true
+                );
+                return json_encode($ret);
+            }
         }
         
     }
