@@ -13,10 +13,14 @@ div#content {
     position: relative;
     height: 500px;
     color:white;
+    
 }
 
 div#content div {
     position: absolute;
+}
+div#content div div {
+    position: relative;
 }
 /* header styles */
 div#header {
@@ -47,6 +51,7 @@ div#content a {
 }
 
 div#footer {
+    position: relative;
     padding-top: 8px;
     text-align: center;
     font-size: 9px;
