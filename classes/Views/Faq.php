@@ -33,13 +33,16 @@ class Views_Faq implements Interfaces_View, Interfaces_Json {
     
     /* returns the full HTML, if it doesn't already exist */
     public function html() {
+        return $this->getPager().$this->getPanelContent();
+    }
+    
+    public function getPanelContent() {
         if($this->selectedPage!==null) {
             $pager = $this->getPager();
             $t = new Template($this->m_faqList[$this->selectedPage]);
-            return $pager.$t->html();
+            return $t->html();
         }
     }
-    
     public function getPager() {
         if(count($this->m_faqList) <8) {
             $ret = "<div class=Pager><div><ul>";
@@ -62,8 +65,9 @@ class Views_Faq implements Interfaces_View, Interfaces_Json {
     }
     public function json() {
         $ret = array(
-            'html'=>$this->html(),
-            'ui'=>"PagedPanel",
+            'html'=>$this->getPanelContent(),
+            'pager'=>$this->getPager(),
+            'segmentType'=>"PagedPanel",
             'success'=>true
         );
         return $ret;

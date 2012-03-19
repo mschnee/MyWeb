@@ -91,10 +91,15 @@ div.Pager  li {
 }
 
 div.Pager li.selected {
-    text-decoration: underline;
+    color: black;
+    background: white;
+}
+div#content div.Pager li.selected a {
+    color: black;
 }
 div#content div.Pager li a {
     font-weight: normal;
+    font-size: 9px;
 }
 
 /* faq */
