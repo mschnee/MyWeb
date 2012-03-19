@@ -2,29 +2,35 @@
     var History = window.History;
     bindLinkHandler($('a'));
     
-    var currentPage="/";// window.location.pathname.match(/^(\/\w+)\/?/)[1];
+    var currentPanelData={}
     
     /****
      * Handlers for different panel types
      */
     var _pagedPanelHandler = function(ret) {
-        
         // if loading a new page
-        if(currentPage.substr(0,4)!="/Faq") {
+        if(! currentPanelData.type || currentPanelData.type!="PagedPanel") {
+            currentPanelData = { type: "PagedPanel", page: 0 }
+            
             var currentC = $("div#content>div");
             var newC = $("<div></div>").width("900px");
             newC.append(ret.pager + ret.html);
             segmentTransitions.defaultSlide(currentC,newC);
+        } else {
+            $("div.PagedPanelPager").replaceWith(ret.pager);
+            segmentTransitions.fade($("div.PagedPanelPage"),$(ret.html));
         }
         
-        $("div#Pager a").unbind('click').click(function(){
-            return false;
+        $("div.PagedPanelPager a").unbind('click').click(function(e){
+            History.pushState({href:$(this).attr('href')},null, $(this).attr('href'));
+            return false;           
+            
         }); 
         
     }
     
     var segmentHandlers = {
-        default:  function(ret) {bindLinkHandler($("div#content>div a"));},
+        default:  function(ret) {currentPanelData={};bindLinkHandler($("div#content>div a"));},
         PagedPanel: _pagedPanelHandler,
     };
     var segmentTransitions = {
@@ -65,11 +71,25 @@
                 left: "+=100"
             },500
             );
+        },
+        fade: function(oldElement,newElement) {
+            newElement.css({opacity:0});
+            oldElement.after(newElement);
+            oldElement.animate(
+                {opacity: 0},200, function(){
+                oldElement.remove();
+                newElement.animate({opacity:1},200);
+                
+            });
+            
         }
     }
     
     $(window).bind("statechange",function(event){
         var state = History.getState();
+        
+        if(!state.data.href)
+            state.data.href = window.location.pathname;
         // not working yet
         // var anim = (state === History.getStateByIndex(History.savedStates.length-1))?"defaultSlide":"reverseSlide";
         var anim="defaultSlide";
@@ -84,7 +104,7 @@
                         if( typeof(segmentHandlers[ret.segmentType])==='function')
                             segmentHandlers[ret.segmentType].call(this,ret,state.data.href.match()[1]);
                     } else {
-                        currentPage = state.data.href;
+                        currentPanelData={};
                         bindLinkHandler($("div#content>div a"));
                         var currentC = $("div#content>div");
                         var newC = $("<div></div>").width("900px");
@@ -109,7 +129,7 @@
         selector.click(function(){
             var href = $(this).attr("href");
             if(href.match(/^\//)) {
-                History.pushState({adding:true,href:href},null,href);
+                History.pushState({href:href},null,href);
                 return false;
             } else {
                 return t;

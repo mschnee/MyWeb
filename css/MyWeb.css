@@ -72,34 +72,39 @@ h1 {
 }
 
 /* Pager */
-div.Pager {
-    position: relative;
-    
-}
-div.Pager > div {
+
+div.PagedPanelPager > div:first-child {
     margin: 0px auto;
+    position: relative;
+    float: right;
+    left: -50%;
 }
 
-div.Pager ul {
+div.PagedPanelPager ul {
+    position: relative;
+    left: 50%;
     margin: 0px auto;
     list-style: none;
     padding: 0px;
 }
-div.Pager  li {
+div.PagedPanelPager  li {
     float: left;
-    margin-right: 50px;
+    width: 52px;
+    text-align: center;
 }
-
-div.Pager li.selected {
+div.PagedPanelPager  li.no {
+    color:#888;
+}
+div.PagedPanelPager li.selected {
     color: black;
     background: white;
 }
-div#content div.Pager li.selected a {
+div#content div.PagedPanelPager li.selected a {
     color: black;
 }
-div#content div.Pager li a {
+div#content div.PagedPanelPager li,div#content div.PagedPanelPager li a {
     font-weight: normal;
-    font-size: 9px;
+    font-size: 11px;
 }
 
 /* faq */

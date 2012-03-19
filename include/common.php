@@ -4,7 +4,7 @@
  */
 
  ini_set("display_errors","Off");
- 
+ date_default_timezone_set("UTC");
  $config = array(
     
  );

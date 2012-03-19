@@ -17,7 +17,7 @@ class Controllers_HtmlLoader {
 //             $this->m_content = $refl->newInstanceArgs(array_slice($tokens,1));
 //         } catch(Exception $e) {
             $refl = new ReflectionClass("Views_MainIndex");
-            $this->m_content = $refl->newInstanceArgs(array_slice($tokens,1));
+            //$this->m_content = $refl->newInstanceArgs(array_slice($tokens,1));
 //         }
 //         if($refl->hasMethod("setArguments")) {
 //             $this->m_content->setArguments($arguments);
@@ -25,7 +25,7 @@ class Controllers_HtmlLoader {
     
     }
     public function html() {
-        $this->m_view->setContent($this->m_content);
+        //$this->m_view->setContent($this->m_content);
         if($this->m_view)
             return $this->m_view->html();
     }

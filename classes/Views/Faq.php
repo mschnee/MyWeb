@@ -37,7 +37,7 @@ class Views_Faq implements Interfaces_View, Interfaces_Json {
     }
     
     public function getPanelContent() {
-        if($this->selectedPage!==null) {
+        if($this->selectedPage !== null) {
             $pager = $this->getPager();
             $t = new Template($this->m_faqList[$this->selectedPage]);
             return $t->html();
@@ -45,18 +45,22 @@ class Views_Faq implements Interfaces_View, Interfaces_Json {
     }
     public function getPager() {
         if(count($this->m_faqList) <8) {
-            $ret = "<div class=Pager><div><ul>";
-            if($this->selectedPage>0) {
+            $ret = "<div class=PagedPanelPager><div><ul>";
+            if($this->selectedPage > 0) {
                 $ret .= "<li><a href=\"/Faq/0\">First</a></li>";
-                $ret .= "<li><a href=\"/Faq/".($this->selectedpage-1)."\">Prev</a></li>";
+                $ret .= "<li><a href=\"/Faq/".($this->selectedPage-1)."\">Prev</a></li>";
+            } else {
+                $ret .= "<li class=no>First</li><li class=no>Prev</li>";
             }
             foreach($this->m_faqList as $i=>$item) {
                 $sel = ($i==$this->selectedPage?"class=selected":"");
                 $ret .= "<li $sel ><a href=\"/Faq/$i\">".($i+1)."</a></li>";
             }
             if($this->selectedPage<count($this->m_faqList)-1) {
-                $ret .= "<li><a href=\"/Faq/".($this->selectedpage+1)."\">Next</a></li>";
+                $ret .= "<li><a href=\"/Faq/".($this->selectedPage+1)."\">Next</a></li>";
                 $ret .= "<li><a href=\"/Faq/".(count($this->m_faqList)-1)."\">Last</a></li>";
+            } else {
+                $ret .= "<li class=no>Next</li><li class=no>Last</li>";
             }
             $ret .="</ul></div><div style='clear:both'>&nbsp;</div></div>";
         }
@@ -65,7 +69,7 @@ class Views_Faq implements Interfaces_View, Interfaces_Json {
     }
     public function json() {
         $ret = array(
-            'html'=>$this->getPanelContent(),
+            'html'=>"<div class=PagedPanelPage>".$this->getPanelContent()."</div>",
             'pager'=>$this->getPager(),
             'segmentType'=>"PagedPanel",
             'success'=>true
