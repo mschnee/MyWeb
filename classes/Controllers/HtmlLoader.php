@@ -28,5 +28,6 @@ class Controllers_HtmlLoader {
         //$this->m_view->setContent($this->m_content);
         if($this->m_view)
             return $this->m_view->html();
+        else return "";
     }
 }

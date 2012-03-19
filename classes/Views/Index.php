@@ -18,8 +18,7 @@ class Views_Index implements Interfaces_View {
             
             if($this->m_content)
                 $t->body = $this->m_content;
-            else
-                $t->body = new Views_MainIndex();
+            // else                $t->body = new Views_MainIndex();
             
             $t->header = new Views_Header();
             $t->footer = new Views_Footer();
